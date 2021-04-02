@@ -13,7 +13,7 @@ $ make create-project # Install the latest Laravel project
 $ make install-recommend-packages # Not required
 ```
 
-http://localhost
+http://127.0.0.1:10080
 
 Read this [Makefile](https://github.com/Yamamoto0525/laravel-base/blob/main/Makefile).
 
