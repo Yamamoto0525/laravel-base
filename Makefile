@@ -96,6 +96,10 @@ cache-clear:
 	docker-compose exec app composer clear-cache
 	@make optimize-clear
 	docker-compose exec app php artisan event:clear
+serve:
+	docker-compose exec app php artisan serve --host 0.0.0.0
+run:
+	docker-compose exec app php artisan ${CMD}
 db:
 	docker-compose exec db bash
 sql:
