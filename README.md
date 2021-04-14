@@ -13,14 +13,13 @@ $ make create-project # Install the latest Laravel project
 $ make install-recommend-packages # Not required
 ```
 
-http://127.0.0.1:10080
+http://127.0.0.1
 
-Read this [Makefile](https://github.com/Yamamoto0525/laravel-base/blob/main/Makefile).
+Read this [Makefile](https://github.com/Yamamoto0525/laravel-base/blob/apache/Makefile).
 
 ## Container structure
 
 ```bash
-├── app
 ├── web
 └── db
 ```
@@ -28,13 +27,8 @@ Read this [Makefile](https://github.com/Yamamoto0525/laravel-base/blob/main/Make
 ### app container
 
 - Base image
-  - [php](https://hub.docker.com/_/php):8.0-fpm-buster
+  - [php](https://hub.docker.com/_/php):8.0.3-apache-buster
   - [composer](https://hub.docker.com/_/composer):2.0
-
-### web container
-
-- Base image
-  - [nginx](https://hub.docker.com/_/nginx):1.18-alpine
 
 ### db container
 
