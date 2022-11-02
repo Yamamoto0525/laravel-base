@@ -1,4 +1,4 @@
-# laravel-base
+# laravel-base on Apache
 
 ## Introduction
 
@@ -9,37 +9,37 @@ Build a simple laravel development environment with docker-compose.
 ```bash
 $ git clone https://github.com/Yamamoto0525/laravel-base
 $ cd laravel-base
-$ make create-project # Install the latest Laravel project
-$ make install-recommend-packages # Not required
+$ make init 
 ```
 
-http://127.0.0.1:10080
+http://localhost
 
 Read this [Makefile](https://github.com/Yamamoto0525/laravel-base/blob/main/Makefile).
 
 ## Container structure
 
 ```bash
-├── app
 ├── web
-└── db
+├── db
+└── pma
 ```
-
-### app container
-
-- Base image
-  - [php](https://hub.docker.com/_/php):8.0-fpm-buster
-  - [composer](https://hub.docker.com/_/composer):2.0
 
 ### web container
 
 - Base image
-  - [nginx](https://hub.docker.com/_/nginx):1.18-alpine
+  - [php & Apache](https://hub.docker.com/layers/php/library/php/8.0.3-apache-buster/images/sha256-1d949fde1481072fcc001f211b849cd1c44ba7250a7574c268541fab64128608?context=explore):8.0.3-apache-buster
+  - [node](https://hub.docker.com/_/node):node:14-buster
+  - [composer](https://hub.docker.com/_/composer):2.0
 
 ### db container
 
 - Base image
   - [mysql](https://hub.docker.com/_/mysql):8.0
+
+### pma container
+
+- Base image
+  - [phpmyadmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/):phpmyadmin/phpmyadmin
 
 #### Persistent MySQL Storage
 

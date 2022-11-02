@@ -1,33 +1,48 @@
 version: "3.8"
 services:
-  app:
-    build: ./infra/php
+  web:
+    build:
+      context: .
+      dockerfile: ./infra/php/Dockerfile
     ports:
+      - ${WEB_PORT:-80}:80
       - 8000:8000
     volumes:
-      - ./backend:/work
-  web:
-    image: nginx:1.18-alpine
-    ports:
-      - 10080:80
-    volumes:
-      - ./backend:/work
-      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    working_dir: /work
+      - ./backend:/work/backend
+      - ./log:/var/log/apache2
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_NAME:-laravel_local}
+      - DB_USERNAME=${DB_USER:-phper}
+      - DB_PASSWORD=${DB_PASS:-secret}
   db:
-    build: ./infra/mysql
+    build:
+      context: .
+      dockerfile: ./infra/mysql/Dockerfile
+    ports:
+      - ${DB_PORT:-3306}:3306
     volumes:
-      - db-store:/var/lib/mysql
+      - db-store:/var/lib/mysql:rw
+    user: mysql
+    environment:
+      - MYSQL_DATABASE=${DB_NAME:-laravel_local}
+      - MYSQL_USER=${DB_USER:-phper}
+      - MYSQL_PASSWORD=${DB_PASS:-secret}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
   pma:
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_HOST=db
-      - PMA_USER=phper
-      - PMA_PASSWORD=secret
+      - PMA_USER=root
+      - PMA_PASSWORD=${DB_PASS:-secret}
     ports:
       - 8080:80
     volumes:
       - pma-session-store:/sessions
+      - ./infra/pma/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
+      - ./infra/pma/config.inc.php:/var/www/html/config.inc.php
 
 volumes:
   db-store:
